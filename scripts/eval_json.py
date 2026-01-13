@@ -2,6 +2,23 @@ import json
 from pathlib import Path
 
 
+ALLOWED_PRIORITIES = {"p0", "p1", "p2", "p3"}
+ALLOWED_CATEGORIES = {
+    "billing",
+    "bug",
+    "account",
+    "auth",
+    "security",
+    "outage",
+    "data",
+    "feature_request",
+    "how_to",
+    "integration",
+    "unknown",
+}
+REQUIRED_KEYS = {"category", "priority", "next_action"}
+
+
 def is_valid_json(s: str) -> bool:
     try:
         json.loads(s)
@@ -45,6 +62,29 @@ def main() -> None:
             errors.append(f"Line {i}: assistant content missing/empty")
         elif not is_valid_json(assistant_content):
             errors.append(f"Line {i}: assistant content is not valid JSON: {assistant_content}")
+        else:
+            assistant_obj = json.loads(assistant_content)
+
+            if not isinstance(assistant_obj, dict):
+                errors.append(f"Line {i}: assistant JSON must be an object/dict")
+                continue
+
+            missing = REQUIRED_KEYS - assistant_obj.keys()
+            if missing:
+                errors.append(f"Line {i}: assistant JSON missing keys: {sorted(missing)}")
+
+            category = assistant_obj.get("category")
+            priority = assistant_obj.get("priority")
+            next_action = assistant_obj.get("next_action")
+
+            if category not in ALLOWED_CATEGORIES:
+                errors.append(f"Line {i}: invalid category: {category}")
+
+            if priority not in ALLOWED_PRIORITIES:
+                errors.append(f"Line {i}: invalid priority: {priority}")
+
+            if not isinstance(next_action, str) or not next_action.strip():
+                errors.append(f"Line {i}: next_action must be a non-empty string")
 
     if errors:
         print("FAIL ❌ Dataset has issues:")
