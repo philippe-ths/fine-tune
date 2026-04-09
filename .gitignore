@@ -4,13 +4,13 @@ __pycache__/
 .venv/
 .env
 
+# macOS
+.DS_Store
+
 # Data / outputs
 data/*.jsonl
 data/*.csv
 outputs/
-
-data/train.jsonl
-!data/test_cases.json
 
 # AI workflow
 CLAUDE.md
