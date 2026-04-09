@@ -1,7 +1,15 @@
 import json
 from pathlib import Path
 
-SYSTEM = "You extract structured JSON. Output MUST be valid JSON only."
+SYSTEM = (
+    "You extract structured JSON. Output MUST be valid JSON only.\n"
+    "Return exactly these keys: category, priority, next_action.\n"
+    "priority rubric:\n"
+    "- p0: outage/security breach/can’t run payroll or widespread failure\n"
+    "- p1: major functionality broken for a user/team; high business impact\n"
+    "- p2: bug with workaround or limited impact; not urgent\n"
+    "- p3: how-to or feature request; low urgency\n"
+)
 
 EXAMPLES = [
     # 1) Billing: duplicate charge (time-sensitive money issue)
@@ -182,6 +190,12 @@ EXAMPLES = [
     {
         "input": "Dev: 'We’re getting 429 Too Many Requests intermittently during peak hours. Any suggestions?'",
         "output": {"category": "integration", "priority": "p2", "next_action": "confirm current request rate and recommend exponential backoff, batching, and checking rate limit headers"},
+    },
+
+    # 31) Browser-specific: charts blank on Safari
+    {
+        "input": "User: 'Charts are blank on Safari but fine on Chrome. Not urgent, just annoying.'",
+        "output": {"category": "bug", "priority": "p2", "next_action": "request Safari version/macOS version and console errors, then reproduce in Safari"},
     },
 ]
 

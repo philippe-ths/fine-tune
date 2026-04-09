@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 import json
+import os
 from openai import OpenAI
 
 SYSTEM = (
@@ -12,8 +13,8 @@ SYSTEM = (
     "No extra keys. No prose."
 )
 
-BASE_MODEL = "gpt-4.1-nano-2025-04-14"
-FT_MODEL = "ft:gpt-4.1-nano-2025-04-14:personal::CxZyZXib"
+BASE_MODEL = os.environ.get("BASE_MODEL", "gpt-4.1-nano-2025-04-14")
+FT_MODEL = os.environ.get("FT_MODEL", "ft:gpt-4.1-nano-2025-04-14:personal::CxZyZXib")
 
 TEST_INPUTS = [
     "Customer: 'Login keeps failing. Says invalid password but it is correct. Urgent: payroll run today.'",
