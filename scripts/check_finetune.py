@@ -3,7 +3,7 @@ load_dotenv()
 
 from openai import OpenAI
 
-JOB_ID = "ftjob-QF8fTLiyQJtgFw7Gr3zcfGO4"
+JOB_ID = "ftjob-7RppO6EqSTdp1CVWREreAko0"
 
 def main() -> None:
     client = OpenAI()

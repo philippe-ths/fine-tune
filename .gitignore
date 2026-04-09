@@ -11,3 +11,11 @@ outputs/
 
 data/train.jsonl
 !data/test_cases.json
+
+# AI workflow
+CLAUDE.md
+.claude/
+.ai-policy/
+.githooks/
+ai-workflow.md
+project-spec.md 
