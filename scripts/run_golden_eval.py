@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 import json
+import os
 from pathlib import Path
 from openai import OpenAI
 
@@ -13,8 +14,8 @@ SYSTEM = (
     "No extra keys. No prose."
 )
 
-BASE_MODEL = "gpt-4.1-nano-2025-04-14"
-FT_MODEL = "ft:gpt-4.1-nano-2025-04-14:personal::CxauVJbP"
+BASE_MODEL = os.environ.get("BASE_MODEL", "gpt-4.1-nano-2025-04-14")
+FT_MODEL = os.environ.get("FT_MODEL", "ft:gpt-4.1-nano-2025-04-14:personal::CxauVJbP")
 
 TEST_PATH = Path("data/test_cases.json")
 
